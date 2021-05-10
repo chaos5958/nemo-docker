@@ -27,10 +27,6 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_6
         conda update --all && \
         echo "conda activate base" >> ~/.bashrc
 
-# create conda environments
-RUN conda create -n nemo_py3.6 python=3.6 imageio tensorflow-gpu==1.15
-RUN conda create -n nemo_py3.5 python=3.5 imageio
-
 # install awesomevim
 RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
     sh ~/.vim_runtime/install_awesome_vimrc.sh && \
@@ -39,3 +35,9 @@ RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
 # install youtube-dl
 RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
 RUN chmod a+rx /usr/local/bin/youtube-dl
+
+# create conda environments
+ADD environment1.yml /environment1.yml
+RUN conda env update -f /environment1.yml
+ADD environment2.yml /environment2.yml
+RUN conda env update -f /environment2.yml

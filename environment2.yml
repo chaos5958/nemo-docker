@@ -1,0 +1,7 @@
+name: nemo_py3.5
+dependencies:
+  - pip
+  - python=3.6
+  - imageio
+  - pip:
+    - tensorflow==1.14
