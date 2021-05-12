@@ -13,7 +13,7 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
         libglib2.0-0 libxext6 libsm6 libxrender1 \
         git mercurial subversion \
-        ffmpeg vim tmux yasm
+        ffmpeg vim tmux yasm android-tools-adb
 
 # install anaconda
 ENV PATH /opt/conda/bin:$PATH
