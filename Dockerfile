@@ -2,12 +2,6 @@
 FROM tensorflow/tensorflow:1.15.5-gpu-py3
 
 LABEL description="Container for use with NEMO"
-ENV NEMO_CODE_ROOT /workspace/nemo
-ENV NEMO_DATA_ROOT /workspace/nemo-data
-ENV SNPE_ROOT $NEMO_CODE_ROOT/third_party/snpe
-ENV PYTHONPATH  $NEMO_CODE_ROOT:$SNPE_ROOT/lib/python:$PYTHONPATH
-WORKDIR /workspace
-SHELL ["/bin/bash", "-c"]
 
 # install packages
 RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
@@ -41,3 +35,18 @@ ADD environment1.yml /environment1.yml
 RUN conda env update -f /environment1.yml
 ADD environment2.yml /environment2.yml
 RUN conda env update -f /environment2.yml
+
+# download android ndk 
+RUN wget https://dl.google.com/android/repository/android-ndk-r14b-linux-x86_64.zip?hl=ko -O /root/android-ndk-r14b.zip 
+RUN unzip /root/android-ndk-r14b.zip
+RUN ln -s /android-ndk-r14b/toolchains/llvm/prebuilt/linux-x86_64 /android-ndk-r14b/toolchains/llvm/prebuilt/linux-x86
+RUN ln -s /android-ndk-r14b/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64 /android-ndk-r14b/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86
+
+# add environment variables
+ENV NEMO_CODE_ROOT /workspace/nemo
+ENV NEMO_DATA_ROOT /workspace/nemo-data
+ENV SNPE_ROOT $NEMO_CODE_ROOT/third_party/snpe
+ENV PYTHONPATH  $NEMO_CODE_ROOT:$SNPE_ROOT/lib/python:$PYTHONPATH
+ENV PATH=/android-ndk-r14b/build/:$PATH
+WORKDIR /workspace
+SHELL ["/bin/bash", "-c"]
