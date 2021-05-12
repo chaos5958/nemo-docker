@@ -1,5 +1,6 @@
 name: nemo_py3.6
 dependencies:
   - python=3.6
+  - networkx
   - imageio
   - tensorflow-gpu==1.15

@@ -1,6 +1,7 @@
 name: nemo_py3.5
 dependencies:
   - pip
+  - networkx
   - python=3.6
   - imageio
   - pip:
