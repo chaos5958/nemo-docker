@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo docker run -it \
+sudo docker run --privileged -v /dev/bus/usb:/dev/bus/usb \
+    -it \
     --name nemo \
     -p 5001:5001 \
     --gpus all \
